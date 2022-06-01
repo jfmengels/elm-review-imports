@@ -22,11 +22,20 @@ rule config =
         options =
             Options.fromConfig config
     in
-    Rule.newModuleRuleSchema "NoInconsistentAliases" Context.initial
+    Rule.newModuleRuleSchemaUsingContextCreator "NoInconsistentAliases" initialContext
         |> Rule.withImportVisitor (importVisitor options)
         |> NameVisitor.withNameVisitor moduleCallVisitor
         |> Rule.withFinalModuleEvaluation (finalEvaluation options.lookupAlias)
         |> Rule.fromModuleRuleSchema
+
+
+initialContext : Rule.ContextCreator () Context.Module
+initialContext =
+    Rule.initContextCreator
+        (\lookupTable () ->
+            Context.initial lookupTable
+        )
+        |> Rule.withModuleNameLookupTable
 
 
 importVisitor : Options -> Node Import -> Context.Module -> ( List (Error {}), Context.Module )

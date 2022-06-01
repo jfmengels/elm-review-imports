@@ -24,20 +24,23 @@ import NoInconsistentAliases.BadAliasSet as BadAliasSet exposing (BadAliasSet)
 import NoInconsistentAliases.MissingAlias exposing (MissingAlias)
 import NoInconsistentAliases.MissingAliasSet as MissingAliasSet exposing (MissingAliasSet)
 import NoInconsistentAliases.ModuleUse as ModuleUse exposing (ModuleUse)
+import Review.ModuleNameLookupTable exposing (ModuleNameLookupTable)
 
 
 type Module
     = Module
-        { aliases : Dict String ModuleName
+        { lookupTable : ModuleNameLookupTable
+        , aliases : Dict String ModuleName
         , badAliases : BadAliasSet
         , missingAliases : MissingAliasSet
         }
 
 
-initial : Module
-initial =
+initial : ModuleNameLookupTable -> Module
+initial lookupTable =
     Module
-        { aliases = Dict.empty
+        { lookupTable = lookupTable
+        , aliases = Dict.empty
         , badAliases = BadAliasSet.empty
         , missingAliases = MissingAliasSet.empty
         }
