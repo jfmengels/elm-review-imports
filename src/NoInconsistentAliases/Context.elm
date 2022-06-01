@@ -37,9 +37,9 @@ type Module
 
 
 initial : ModuleNameLookupTable -> Module
-initial lookupTable =
+initial lookupTable_ =
     Module
-        { lookupTable = lookupTable
+        { lookupTable = lookupTable_
         , aliases = Dict.empty
         , badAliases = BadAliasSet.empty
         , missingAliases = MissingAliasSet.empty
