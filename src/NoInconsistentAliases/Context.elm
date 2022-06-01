@@ -1,5 +1,6 @@
 module NoInconsistentAliases.Context exposing
     ( Module, initial
+    , lookupTable
     , addModuleAlias, lookupModuleName
     , addMissingAlias, foldMissingAliases
     , addBadAlias, foldBadAliases
@@ -9,6 +10,7 @@ module NoInconsistentAliases.Context exposing
 {-|
 
 @docs Module, initial
+@docs lookupTable
 @docs addModuleAlias, lookupModuleName
 @docs addMissingAlias, foldMissingAliases
 @docs addBadAlias, foldBadAliases
@@ -44,6 +46,11 @@ initial lookupTable_ =
         , badAliases = BadAliasSet.empty
         , missingAliases = MissingAliasSet.empty
         }
+
+
+lookupTable : Module -> ModuleNameLookupTable
+lookupTable (Module context) =
+    context.lookupTable
 
 
 addModuleAlias : ModuleName -> String -> Module -> Module
